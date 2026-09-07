@@ -11,15 +11,18 @@
 Separate files for separate features. Each feature gets its own file so the code stays organized and easy to find.
 
 ```
-app.py                  # main Flask server
+app.py                  # main Flask server (routes)
 features/
-    purchases.py        # recording and listing purchases
+    purchases.py        # recording and listing purchases (SQLite store)
     budget.py           # setting and tracking budgets
+    money.py            # shared dollars <-> cents helper (the only conversion point)
+    logging.py          # @logged decorator, keeps logging out of business logic
 static/
     style.css           # all styles
-    app.js              # all JavaScript
 templates/
     index.html          # main page
+tests/                  # pytest tests (one file per feature)
+requirements.txt        # Flask, pytest
 ```
 
 ## Engineering Standards

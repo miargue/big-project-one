@@ -2,7 +2,10 @@
 
 ## Current State
 
-This is a brand new project. No code exists yet.
+Phase 1 (walking skeleton) is implemented: a user can record a purchase with
+an item name, amount, and category, see all purchases in a list, and see the
+total spent. Purchases persist in a SQLite database. See
+`SPECS/2026-09-07-phase1-walking-skeleton/` for the feature spec.
 
 ## Phase 1: Walking Skeleton (First Feature)
 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Basket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main>
+        <h1>Budget Basket</h1>
+
+        <section>
+            <h2>Add a purchase</h2>
+            <form method="post" action="{{ url_for('add') }}">
+                <label for="item">Item</label>
+                <input type="text" id="item" name="item" required>
+
+                <label for="amount">Amount (in dollars)</label>
+                <input type="text" id="amount" name="amount" placeholder="3.99" required>
+
+                <label for="category">Category</label>
+                <input type="text" id="category" name="category" required>
+
+                <button type="submit">Add purchase</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Total spent: ${{ total_dollars }}</h2>
+        </section>
+
+        <section>
+            <h2>All purchases</h2>
+            {% if purchases %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase in purchases %}
+                    <tr>
+                        <td>{{ purchase['item'] }}</td>
+                        <td>${{ purchase['amount_dollars'] }}</td>
+                        <td>{{ purchase['category'] }}</td>
+                        <td>{{ purchase['date'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No purchases yet.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

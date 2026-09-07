@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# The SQLite database is created at runtime
+*.db
+
+# Logs
+*.log
