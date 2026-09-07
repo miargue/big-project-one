@@ -78,3 +78,18 @@ def total_spent_cents(db_path=DATABASE_PATH):
         return row["total"]
     finally:
         connection.close()
+
+
+@logged
+def total_spent_between(start, end, db_path=DATABASE_PATH):
+    """Return the total spent between two dates (both included), in cents."""
+    connection = get_connection(db_path)
+    try:
+        row = connection.execute(
+            "SELECT COALESCE(SUM(amount), 0) AS total "
+            "FROM purchases WHERE date BETWEEN ? AND ?",
+            (start, end),
+        ).fetchone()
+        return row["total"]
+    finally:
+        connection.close()

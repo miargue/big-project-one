@@ -11,6 +11,28 @@
         <h1>Budget Basket</h1>
 
         <section>
+            <h2>Weekly budget</h2>
+            {% if panel %}
+            <p>Limit: ${{ panel['limit_dollars'] }}</p>
+            <p>Spent this week: ${{ panel['spent_dollars'] }}</p>
+            <p>Remaining: ${{ panel['remaining_dollars'] }}</p>
+            {% if panel['status'] == "approaching" %}
+            <p class="warning">Approaching budget!</p>
+            {% endif %}
+            {% if panel['status'] == "over" %}
+            <p class="danger">Over budget by ${{ panel['over_dollars'] }}</p>
+            {% endif %}
+            {% else %}
+            <p>No budget set yet.</p>
+            {% endif %}
+            <form method="post" action="{{ url_for('set_budget') }}">
+                <label for="limit">Weekly limit (in dollars)</label>
+                <input type="text" id="limit" name="limit" placeholder="100.00" required>
+                <button type="submit">Set budget</button>
+            </form>
+        </section>
+
+        <section>
             <h2>Add a purchase</h2>
             <form method="post" action="{{ url_for('add') }}">
                 <label for="item">Item</label>

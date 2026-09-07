@@ -62,3 +62,13 @@ th, td {
     padding: 0.5rem;
     border-bottom: 1px solid #eee;
 }
+
+.warning {
+    color: #b58900;
+    font-weight: bold;
+}
+
+.danger {
+    color: #cc0000;
+    font-weight: bold;
+}
