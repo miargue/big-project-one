@@ -10,7 +10,7 @@
     <main>
         <h1>Budget Basket</h1>
 
-        <section>
+        <section class="budget-card">
             <h2>Weekly budget</h2>
             {% if panel %}
             <p>Limit: ${{ panel['limit_dollars'] }}</p>
@@ -32,7 +32,7 @@
             </form>
         </section>
 
-        <section>
+        <section class="add-card">
             <h2>Add a purchase</h2>
             <form method="post" action="{{ url_for('add') }}">
                 <label for="item">Item</label>
@@ -51,7 +51,7 @@
             </form>
         </section>
 
-        <section>
+        <section class="organize-card">
             <h2>Organize purchases</h2>
             <form method="get" action="{{ url_for('index') }}">
                 <fieldset>
@@ -106,11 +106,11 @@
             </p>
         </section>
 
-        <section>
+        <section class="total-card">
             <h2>Total spent: ${{ total_dollars }}</h2>
         </section>
 
-        <section>
+        <section class="list-card">
             <h2>Purchases</h2>
             {% if purchases %}
             <table>
