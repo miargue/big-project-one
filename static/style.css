@@ -72,3 +72,41 @@ th, td {
     color: #cc0000;
     font-weight: bold;
 }
+
+/* Organization panel */
+
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.75rem;
+    padding: 0.5rem;
+}
+
+.radio {
+    display: inline-block;
+    font-weight: normal;
+    margin: 0.25rem 1.5rem 0.25rem 0;
+}
+
+select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.date-range input {
+    width: auto;
+}
+
+.window {
+    margin-bottom: 0.25rem;
+}
+
+.stats {
+    color: #2d6a4f;
+    font-weight: bold;
+}

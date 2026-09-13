@@ -44,8 +44,66 @@
                 <label for="category">Category</label>
                 <input type="text" id="category" name="category" required>
 
+                <label for="trip">Trip</label>
+                <input type="text" id="trip" name="trip" placeholder="e.g. Weekly Shop">
+
                 <button type="submit">Add purchase</button>
             </form>
+        </section>
+
+        <section>
+            <h2>Organize purchases</h2>
+            <form method="get" action="{{ url_for('index') }}">
+                <fieldset>
+                    <legend>Period</legend>
+                    <label class="radio">
+                        <input type="radio" name="period" value="week" {% if period == 'week' %}checked{% endif %}>
+                        This week (Mon-Sun)
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="period" value="month" {% if period == 'month' %}checked{% endif %}>
+                        This month
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="period" value="custom" {% if period == 'custom' %}checked{% endif %}>
+                        Custom range
+                    </label>
+                </fieldset>
+
+                <label for="trip_filter">Trip</label>
+                <select id="trip_filter" name="trip">
+                    <option value="">All trips</option>
+                    {% for label in trips %}
+                    <option value="{{ label }}"
+                            {% if trip_filter == label %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="date-range">
+                    <label for="start_date">From</label>
+                    <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
+                    <label for="end_date">To</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
+                </div>
+
+                <button type="submit">Update view</button>
+            </form>
+
+            <p class="window">
+                {% if period == 'custom' %}
+                Custom range: {{ period_start }} to {{ period_end }}
+                {% elif period == 'month' %}
+                This month: {{ period_start }} to {{ period_end }}
+                {% else %}
+                This week: {{ period_start }} to {{ period_end }}
+                {% endif %}
+                {% if trip_filter %} &middot; Trip: {{ trip_filter }}{% endif %}
+            </p>
+            <p class="stats">
+                {{ stats['count'] }} purchase{{ 's' if stats['count'] != 1 }}
+                &middot; Spent: ${{ stats['total_dollars'] }}
+                &middot; Average: ${{ stats['average_dollars'] }}
+            </p>
         </section>
 
         <section>
@@ -53,7 +111,7 @@
         </section>
 
         <section>
-            <h2>All purchases</h2>
+            <h2>Purchases</h2>
             {% if purchases %}
             <table>
                 <thead>
@@ -62,6 +120,7 @@
                         <th>Amount</th>
                         <th>Category</th>
                         <th>Date</th>
+                        <th>Trip</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,12 +130,13 @@
                         <td>${{ purchase['amount_dollars'] }}</td>
                         <td>{{ purchase['category'] }}</td>
                         <td>{{ purchase['date'] }}</td>
+                        <td>{{ purchase['trip'] }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             {% else %}
-            <p>No purchases yet.</p>
+            <p>No purchases yet in this period.</p>
             {% endif %}
         </section>
     </main>

@@ -41,20 +41,31 @@ easy-to-read interface.
   control what "today" is, so organization tests are stable.
 - **Trip is user-typed text** — from Phase 1, each purchase has a `trip` column
   (e.g. "Weekly Shop"). Phase 3 adds filtering and grouping by this field.
-- **Organization reuses existing store**: `purchases.total_spent_between(start, end, db_path)`
-  from Phase 2 computes spent in any date range. No new store needed.
+- **Organization reuses existing store**: Phase 2's `purchases.total_spent_between()`
+  remains the single shared store function for date-range totals (used by the
+  budget panel). The organization filters instead work on the in-memory list
+  returned by `purchases.list_purchases()` via `organization.filter_purchases()`;
+  this is simpler and lets the summary statistics (which must also respect the
+  trip filter and include an average) always match the exact rows being shown.
+  No new store is needed.
 - **Pure status/helpers** from Phase 2 (`budget_status`, `remaining_cents`) are not
   reused here — organization is display/filtering, not budget tracking.
 - **Backward compatibility**: the index page evolves in place to add organization
   filters; the existing `/` and `/add` routes keep their behavior. No legacy URLs
   are preserved intentionally — no old code is kept for compatibility's sake.
+- The app's "Add a purchase" form includes a **Trip** text input so users can
+  type a trip label (SPECS/TECH.md "Trips") — without it the trip dropdown and
+  filter would always be empty (the `trip` column existed since Phase 1, but
+  the earlier forms never captured it). This is a small, documented extension,
+  not a legacy-compatibility shim.
 
 ## Architecture Notes
 
 - Organization feature lives in `features/organization.py` per SPECS/TECH.md structure.
 - Week/reusable helpers live in `features/dates.py` (already existing from Phase 2).
-- "Filter by date range" is powered by `purchases.total_spent_between()` from Phase 2;
-  organization reuses this same function.
+- **Filter by date range** is a filter over the in-memory purchase list
+  (`organization.filter_purchases()`); it combines with the trip filter so the
+  list and stats always agree.
 - Filter UI lives on the index page alongside the budget panel and purchase form.
 - Keep it simple, elegant, and general; no clever tricks.
 
